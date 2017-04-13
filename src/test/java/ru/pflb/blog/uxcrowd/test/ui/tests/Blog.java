@@ -19,7 +19,7 @@ public class Blog {
     private HttpResponse<String> response;
     private WebDriver driver;
     private SoftAssert softAssert;
-    String uxCrowdURL;
+    private String uxCrowdURL;
 
     @BeforeMethod
     public void setUp (){
@@ -36,8 +36,8 @@ public class Blog {
         Thread.sleep(1000);
         String blogURL = driver.getCurrentUrl();
         String blogTitle = driver.getTitle();
+        softAssert.assertEquals(blogURL, uxCrowdURL + "blog");
         softAssert.assertEquals(blogTitle, "Блог о пользовательском юзабилити-тестировании");
-        softAssert.assertEquals(blogURL, uxCrowdURL+ "blog");
         softAssert.assertAll();
     }
 
