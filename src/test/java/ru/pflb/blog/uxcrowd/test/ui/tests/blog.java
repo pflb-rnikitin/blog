@@ -22,22 +22,30 @@ public class blog {
     @BeforeMethod
     public void setUp (){
 
+        String uxCrowdURL = "https://uxcrowd.ru/";
         driver = new ChromeDriver();
+    }
+
+    @Test
+    public void openBlog() {
+
+        driver.get("uxCrowdURL");
+        
     }
 
     @Test
     public void getBlogStatus () throws UnirestException {
 
-        response = Unirest.get("https://lk.uxcrowd.ru/blog").asString();
+        response = Unirest.get("https://uxcrowd.ru/blog").asString();
         MatcherAssert.assertThat(response.getStatus(), is(200));
     }
 
     @Test
     public void closeBlog () throws Exception {
-        driver.get("https://lk.uxcrowd.ru/blog");
+        driver.get("https://uxcrowd.ru/blog");
         Thread.sleep(500);
         driver.findElement(By.cssSelector("div.btn_next_uxc")).click();
-        MatcherAssert.assertThat(driver.getCurrentUrl(), is("https://lk.uxcrowd.ru/"));
+        MatcherAssert.assertThat(driver.getCurrentUrl(), is("https://uxcrowd.ru/"));
     }
 
     @AfterMethod
@@ -46,3 +54,4 @@ public class blog {
         driver.quit();
     }
 }
+
