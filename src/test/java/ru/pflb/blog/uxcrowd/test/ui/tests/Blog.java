@@ -6,6 +6,9 @@ import static org.hamcrest.core.Is.is;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -20,20 +23,24 @@ public class Blog {
     private WebDriver driver;
     private SoftAssert softAssert;
     private String uxCrowdURL;
+    private WebDriverWait wait;
+
 
     @BeforeMethod
     public void setUp (){
         uxCrowdURL = "https://uxcrowd.ru/";
         driver = new ChromeDriver();
         softAssert = new SoftAssert();
+        wait = new WebDriverWait(driver, 500);
+
     }
 
     @Test
     public void openBlog() throws Exception {
         driver.get(uxCrowdURL);
-        Thread.sleep(1000);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.footer-link[href='/blog']")));
         driver.findElement(By.cssSelector("a.footer-link[href='/blog']")).click();
-        Thread.sleep(1000);
+        Thread.sleep(200);
         String blogURL = driver.getCurrentUrl();
         String blogTitle = driver.getTitle();
         softAssert.assertEquals(blogURL, uxCrowdURL + "blog");
@@ -51,10 +58,10 @@ public class Blog {
 
     @Test
     public void closeBlog () throws Exception {
-        driver.get("https://uxcrowd.ru/blog");
-        Thread.sleep(500);
+        driver.get(uxCrowdURL + "blog");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.btn_next_uxc")));
         driver.findElement(By.cssSelector("div.btn_next_uxc")).click();
-        MatcherAssert.assertThat(driver.getCurrentUrl(), is("https://uxcrowd.ru/"));
+        MatcherAssert.assertThat(driver.getCurrentUrl(), is (uxCrowdURL));
     }
 
     @AfterMethod
