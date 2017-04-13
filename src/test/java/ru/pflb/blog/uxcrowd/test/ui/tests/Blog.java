@@ -14,7 +14,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.HttpResponse;
 
 
-public class blog {
+public class Blog {
 
     private HttpResponse<String> response;
     private WebDriver driver;
@@ -25,14 +25,13 @@ public class blog {
         String uxCrowdURL = "https://uxcrowd.ru/";
         driver = new ChromeDriver();
     }
-
     @Test
     public void openBlog() {
 
         driver.get("uxCrowdURL");
-        
-    }
 
+
+    }
     @Test
     public void getBlogStatus () throws UnirestException {
 
@@ -54,4 +53,3 @@ public class blog {
         driver.quit();
     }
 }
-
