@@ -19,26 +19,25 @@ public class Blog {
     private HttpResponse<String> response;
     private WebDriver driver;
     private SoftAssert softAssert;
+    String uxCrowdURL;
 
     @BeforeMethod
     public void setUp (){
-
-        //String uxCrowdURL = "https://uxcrowd.ru/";
+        uxCrowdURL = "https://uxcrowd.ru/";
         driver = new ChromeDriver();
         softAssert = new SoftAssert();
     }
 
     @Test
     public void openBlog() throws Exception {
-
-        driver.get("https://uxcrowd.ru");
+        driver.get(uxCrowdURL);
         Thread.sleep(1000);
         driver.findElement(By.cssSelector("a.footer-link[href='/blog']")).click();
         Thread.sleep(1000);
+        String blogURL = driver.getCurrentUrl();
         String blogTitle = driver.getTitle();
-        String blogURL = "https://uxcrowd.ru/blog";
         softAssert.assertEquals(blogTitle, "Блог о пользовательском юзабилити-тестировании");
-        softAssert.assertEquals(blogURL, "https://uxcrowd.ru/blog");
+        softAssert.assertEquals(blogURL, uxCrowdURL+ "blog");
         softAssert.assertAll();
     }
 
