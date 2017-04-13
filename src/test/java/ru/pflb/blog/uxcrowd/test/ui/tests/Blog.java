@@ -18,20 +18,31 @@ public class Blog {
 
     private HttpResponse<String> response;
     private WebDriver driver;
+    private SoftAssert softAssert;
 
     @BeforeMethod
     public void setUp (){
 
-        String uxCrowdURL = "https://uxcrowd.ru/";
+        //String uxCrowdURL = "https://uxcrowd.ru/";
         driver = new ChromeDriver();
+        softAssert = new SoftAssert();
     }
+
     @Test
-    public void openBlog() {
+    public void openBlog() throws Exception {
 
-        driver.get("uxCrowdURL");
-
-
+        driver.get("https://uxcrowd.ru");
+        Thread.sleep(1000);
+        driver.findElement(By.cssSelector("a.footer-link[href='/blog']")).click();
+        Thread.sleep(1000);
+        String blogTitle = driver.getTitle();
+        String blogURL = "https://uxcrowd.ru/blog";
+        softAssert.assertEquals(blogTitle, "Блог о пользовательском юзабилити-тестировании");
+        softAssert.assertEquals(blogURL, "https://uxcrowd.ru/blog");
+        softAssert.assertAll();
     }
+
+
     @Test
     public void getBlogStatus () throws UnirestException {
 
@@ -49,7 +60,7 @@ public class Blog {
 
     @AfterMethod
     public void tearDown (){
-
+        if (driver != null)
         driver.quit();
     }
 }
