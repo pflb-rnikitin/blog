@@ -3,22 +3,22 @@ package ru.pflb.blog.uxcrowd.test.ui.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 //Blog main page object model
 
 public class MainPOM {
 
+    @FindBy(how= How.CSS, using="div.btn_next_uxc")
     WebElement backToUXCrowdButton;
-    WebElement openArticleButton1;
-    WebElement backToBlogButton;
+
+    @FindBy(how= How.CSS, using="div.item-0")
     WebElement postButton1;
 
     public MainPOM (WebDriver driver) {
-        backToUXCrowdButton = driver.findElement(By.cssSelector("div.btn_next_uxc"));
-        postButton1 = driver.findElement(By.cssSelector("div.item-0"));
-        backToBlogButton = driver.findElement(By.cssSelector("div.btn_next_uxc"));
+        PageFactory.initElements(driver, this);
     }
-
 
     public void closeBlog () {
 
