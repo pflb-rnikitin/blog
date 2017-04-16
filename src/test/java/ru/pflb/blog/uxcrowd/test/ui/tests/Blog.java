@@ -67,7 +67,7 @@ public class Blog {
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.btn_next_uxc")));
         mainPage.closeBlog();
         Thread.sleep(590);
-        softAssert.assertEquals(driver.getCurrentUrl(), is (uxCrowdURL));
+        softAssert.assertEquals(driver.getCurrentUrl(), uxCrowdURL);
         softAssert.assertEquals(driver.getTitle(),"Юзабилити-тестирование — первая в России краудосрсинговая площадка.");
         softAssert.assertAll();
     }
