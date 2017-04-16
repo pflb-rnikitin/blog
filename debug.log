@@ -34,3 +34,19 @@
 [0410/231632.904:ERROR:process_info.cc(625)] range at 0xff4de000, size 0xf84 fully unreadable
 [0410/231632.905:ERROR:process_info.cc(625)] range at 0xff4db000, size 0xf84 fully unreadable
 [0410/231632.941:ERROR:process_info.cc(389)] NtQuerySystemInformation SystemExtendedHandleInformation: {Not Enough Quota} Not enough virtual memory or paging file quota is available to complete the specified operation.  (0xc0000017)
+[0416/211107.965:ERROR:process_info.cc(625)] range at 0xfecff000, size 0x230 fully unreadable
+[0416/211108.093:ERROR:process_info.cc(625)] range at 0xfecfe000, size 0xf84 fully unreadable
+[0416/211108.093:ERROR:process_info.cc(625)] range at 0xfecfb000, size 0xf84 fully unreadable
+[0416/211108.093:ERROR:process_info.cc(625)] range at 0xfecf8000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebcf000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebcc000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebc9000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebc6000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebc3000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebc0000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebbd000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebba000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebb7000, size 0xf84 fully unreadable
+[0416/211108.094:ERROR:process_info.cc(625)] range at 0xfebb4000, size 0xf84 fully unreadable
+[0416/211108.095:ERROR:process_info.cc(625)] range at 0xfebb1000, size 0xf84 fully unreadable
+[0416/211108.095:ERROR:process_info.cc(625)] range at 0xfebae000, size 0xf84 fully unreadable
