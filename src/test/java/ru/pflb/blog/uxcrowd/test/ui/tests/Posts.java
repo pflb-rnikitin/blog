@@ -2,9 +2,13 @@ package ru.pflb.blog.uxcrowd.test.ui.tests;
 
 import org.hamcrest.MatcherAssert;
 import static org.hamcrest.core.Is.is;
+
+import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
@@ -49,6 +53,18 @@ public class Posts {
         softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ");
         softAssert.assertAll();
     }
+
+    @Test
+    public void sharePost1OnVK() throws InterruptedException {
+        mainPage.openPost1();
+        postPage1 = new PostPOM1(driver);
+        Thread.sleep(5000);
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+        postPage1.sharePostOnVKBySideButton();
+        Thread.sleep(5000);
+    }
+
 
     @Test
     public void closePost1() throws InterruptedException {

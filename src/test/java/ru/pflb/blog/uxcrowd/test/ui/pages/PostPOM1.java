@@ -16,7 +16,12 @@ public class PostPOM1 {
     @FindBy(how=How.CSS, using="a.blog_href")
     WebElement backToBlogButton;
 
+    @FindBy(how=How.CSS, using="a.blog-single-share-link")
+    WebElement sideVKShareButton;
+
+
     public PostPOM1(WebDriver driver) {
+
         PageFactory.initElements(driver,this);
     }
 
@@ -25,4 +30,9 @@ public class PostPOM1 {
         backToBlogButton.click();
     }
 
+    public void sharePostOnVKBySideButton () {
+        sideVKShareButton.click();
+
+
+    }
 }
