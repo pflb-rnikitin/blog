@@ -2,6 +2,7 @@ package ru.pflb.blog.uxcrowd.test.ui.tests;
 
 import org.hamcrest.MatcherAssert;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.StringContains.containsString;
 
 import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.openqa.selenium.By;
@@ -30,6 +31,7 @@ public class Posts {
     private MainPOM mainPage;
     private PostPOM1 postPage1;
     private String uxCrowdBlogURL;
+    private Actions actions;
 
     @BeforeMethod
     public void setUp (){
@@ -39,30 +41,28 @@ public class Posts {
         uxCrowdURL = "https://uxcrowd.ru/";
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
-        driver.get(uxCrowdBlogURL);
+        driver.get(uxCrowdBlogURL + postURL1);
         mainPage = new MainPOM(driver);
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.MILLISECONDS);
+        actions = new Actions(driver);
     }
 
-    @Test
-    public void openPost1() {
 
-        mainPage.openPost1();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL1);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ");
-        softAssert.assertAll();
-    }
 
     @Test
     public void sharePost1OnVK() throws InterruptedException {
+        String parentHandle = driver.getWindowHandle();
         mainPage.openPost1();
         postPage1 = new PostPOM1(driver);
         Thread.sleep(5000);
-        Actions actions = new Actions(driver);
         actions.sendKeys(Keys.PAGE_DOWN).perform();
         postPage1.sharePostOnVKBySideButton();
         Thread.sleep(5000);
+            for(String winHandle : driver.getWindowHandles()){
+                driver.switchTo().window(winHandle);
+            }
+        Thread.sleep(5000);
+        MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("vk.com"));
     }
 
 

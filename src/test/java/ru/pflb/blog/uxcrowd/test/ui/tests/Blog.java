@@ -27,7 +27,9 @@ public class Blog {
     private String uxCrowdBlogURL;
     private WebDriverWait wait;
     private MainPOM mainPage;
-
+    private String postURL1;
+    private String postURL2;
+    private String postURL3;
 
     @BeforeMethod
     public void setUp (){
@@ -36,7 +38,9 @@ public class Blog {
         wait = new WebDriverWait(driver, 500);
         uxCrowdURL = "https://uxcrowd.ru/";
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
-        driver.get(uxCrowdURL);
+        postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
+        postURL2 = "/read/20170222T181316286preimushchestvanizkobiudzhetnykhiuzab";
+        driver.get(uxCrowdBlogURL);
         mainPage = new MainPOM(driver);
         driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
     }
@@ -59,6 +63,35 @@ public class Blog {
 
         response = Unirest.get(uxCrowdURL).asString();
         MatcherAssert.assertThat(response.getStatus(), is(200));
+    }
+    @Test
+    public void openPost1() {
+
+        mainPage.openPost1();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL1);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost2() {
+
+        mainPage.openPost2();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL2);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "ПРЕИМУЩЕСТВА НИЗКОБЮДЖЕТНЫХ ЮЗАБИЛИТИ-ТЕСТИРОВНИЙ");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost3() {
+
+        mainPage.openPost3();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL1);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ");
+        softAssert.assertAll();
     }
 
     @Test
