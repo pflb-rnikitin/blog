@@ -16,9 +16,14 @@ public class PostPOM1 {
     @FindBy(how=How.CSS, using="a.blog_href")
     WebElement backToBlogButton;
 
-    @FindBy(how=How.CSS, using="a.blog-single-share-link")
+    @FindBy(how=How.CSS, using="div.blog-single-social-share img.vk-share-icon")
     WebElement sideVKShareButton;
 
+    @FindBy(how=How.CSS, using="div.blog-single-social-share img.tw-share-icon")
+    WebElement sideTwitterShareButton;
+
+    @FindBy(how=How.CSS, using="div.blog-single-social-share img.fb-share-icon")
+    WebElement sideFBShareButton;
 
     public PostPOM1(WebDriver driver) {
 
@@ -32,7 +37,13 @@ public class PostPOM1 {
 
     public void sharePostOnVKBySideButton () {
         sideVKShareButton.click();
+    }
 
+    public void sharePostOnTwitterBySideButton () {
+        sideTwitterShareButton.click();
+    }
 
+    public void sharePostOnFBBySideButton () {
+        sideFBShareButton.click();
     }
 }

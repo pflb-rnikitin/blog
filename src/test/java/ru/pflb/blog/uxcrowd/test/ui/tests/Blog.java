@@ -30,6 +30,13 @@ public class Blog {
     private String postURL1;
     private String postURL2;
     private String postURL3;
+    private String postURL4;
+    private String postURL5;
+    private String postURL6;
+    private String postURL7;
+    private String postURL8;
+    private String postURL9;
+    private String postURL10;
 
     @BeforeMethod
     public void setUp (){
@@ -40,6 +47,15 @@ public class Blog {
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         postURL2 = "/read/20170222T181316286preimushchestvanizkobiudzhetnykhiuzab";
+        postURL3 = "/read/20170222T1740407413sposobaupravliatvnimaniemposetitelei";
+        postURL4 = "/read/20170328T16281885510tipichnykhoshibokkommercheskikhsait";
+        postURL5 = "/read/20170328T1619303055polzovateleidliaiuzabilititestirovan";
+        postURL6 = "/read/20170328T154409856popupsoobshcheniiaeffektivnodliabizne";
+        postURL7 = "/read/20170328T153935476optimizatsiiainternetmagazinapochemup";
+        postURL8 = "/read/20170328T153256397marketologaeshchenetestirueshvottriso";
+        postURL9 = "/read/20170328T153220919sliubimyminerasstavaiteskaknepoteriat";
+        postURL10 = "/read/20170328T152751081keispoiuzabilitikakpopastvtretiakovsk";
+
         driver.get(uxCrowdBlogURL);
         mainPage = new MainPOM(driver);
         driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
@@ -89,10 +105,81 @@ public class Blog {
 
         mainPage.openPost3();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL1);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ");
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL3);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "3 СПОСОБА УПРАВЛЯТЬ ВНИМАНИЕМ ПОСЕТИТЕЛЕЙ С ПОМОЩЬЮ ТОЧЕК ФИКСАЦИИ");
         softAssert.assertAll();
     }
+
+    @Test
+    public void openPost4() {
+
+        mainPage.openPost4();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL4);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "10 ТИПИЧНЫХ ОШИБОК КОММЕРЧЕСКИХ САЙТОВ С ТОЧКИ ЗРЕНИЯ ЮЗАБИЛИТИ");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost5() {
+
+        mainPage.openPost5();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL5);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "5 ПОЛЬЗОВАТЕЛЕЙ ДЛЯ ЮЗАБИЛИТИ-ТЕСТИРОВАНИЯ: МНОГО ЭТО ИЛИ МАЛО");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost6() {
+
+        mainPage.openPost6();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL6);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "POP-UP СООБЩЕНИЯ: ЭФФЕКТИВНО ДЛЯ БИЗНЕСА И НЕНАВЯЗЧИВО ДЛЯ ПОЛЬЗОВАТЕЛЕЙ");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost7() {
+
+        mainPage.openPost7();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL7);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "ОПТИМИЗАЦИЯ ИНТЕРНЕТ-МАГАЗИНА: ПОЧЕМУ ПОКУПАТЕЛИ БРОСАЮТ СВОИ КОРЗИНЫ");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost8() {
+
+        mainPage.openPost8();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL8);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "МАРКЕТОЛОГ, А ЕЩЕ НЕ ТЕСТИРУЕШЬ? ВОТ ТРИ СОВЕТА, КАК НАЧАТЬ");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost9() {
+
+        mainPage.openPost9();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL9);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "С ЛЮБИМЫМИ НЕ РАССТАВАЙТЕСЬ: КАК НЕ ПОТЕРЯТЬ КЛИЕНТОВ В «ГОРЯЧИЙ» СЕЗОН");
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void openPost10() {
+
+        mainPage.openPost10();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL10);
+        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "КЕЙС ПО ЮЗАБИЛИТИ: КАК ПОПАСТЬ В ТРЕТЬЯКОВСКУЮ ГАЛЕРЕЮ?");
+        softAssert.assertAll();
+    }
+
 
     @Test
     public void closeBlog () throws Exception {

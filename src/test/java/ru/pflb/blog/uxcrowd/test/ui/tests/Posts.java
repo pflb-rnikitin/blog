@@ -42,35 +42,50 @@ public class Posts {
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         driver.get(uxCrowdBlogURL + postURL1);
-        mainPage = new MainPOM(driver);
-        driver.manage().timeouts().implicitlyWait(300, TimeUnit.MILLISECONDS);
+        postPage1 = new PostPOM1(driver);
+        driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
         actions = new Actions(driver);
     }
 
-
-
     @Test
-    public void sharePost1OnVK() throws InterruptedException {
-        String parentHandle = driver.getWindowHandle();
-        mainPage.openPost1();
-        postPage1 = new PostPOM1(driver);
-        Thread.sleep(5000);
+    public void sharePost1OnVKBySideButton() throws InterruptedException {
+        //String parentHandle = driver.getWindowHandle();
         actions.sendKeys(Keys.PAGE_DOWN).perform();
         postPage1.sharePostOnVKBySideButton();
-        Thread.sleep(5000);
-            for(String winHandle : driver.getWindowHandles()){
+        for(String winHandle : driver.getWindowHandles()){
                 driver.switchTo().window(winHandle);
             }
-        Thread.sleep(5000);
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("vk.com"));
+    }
+
+    @Test
+    public void sharePost1OnTwitterBySideButton() throws InterruptedException {
+        //String parentHandle = driver.getWindowHandle();
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+        postPage1.sharePostOnTwitterBySideButton();
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
+        MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("twitter.com"));
+    }
+
+    @Test
+    public void sharePost1OnFBBySideButton() throws InterruptedException {
+        //String parentHandle = driver.getWindowHandle();
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+        postPage1.sharePostOnFBBySideButton();
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
+        MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("facebook.com"));
     }
 
 
     @Test
     public void closePost1() throws InterruptedException {
-
-        mainPage.openPost1();
-        postPage1 = new PostPOM1(driver);
         postPage1.closePost();
         MatcherAssert.assertThat(driver.getCurrentUrl(),is (uxCrowdBlogURL));
 
