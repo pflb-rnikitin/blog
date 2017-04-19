@@ -41,16 +41,25 @@ public class PostPOM1 {
         backToBlogButton.click();
     }
 
-    public void sharePostOnVKBySideButton () {
+    public void sharePostOnVKBySideButton (WebDriver driver) {
         sideVKShareButton.click();
+        for(String winHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(winHandle);
+        }
     }
 
-    public void sharePostOnTwitterBySideButton () {
+    public void sharePostOnTwitterBySideButton (WebDriver driver) {
         sideTwitterShareButton.click();
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
     }
 
-    public void sharePostOnFBBySideButton () {
+    public void sharePostOnFBBySideButton (WebDriver driver) {
         sideFBShareButton.click();
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
     }
 
     public void leaveAnAnonymousComment (String commentText) throws InterruptedException {

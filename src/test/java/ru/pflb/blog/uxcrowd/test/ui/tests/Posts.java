@@ -45,12 +45,8 @@ public class Posts {
 
     @Test
     public void sharePost1OnVKBySideButton() throws InterruptedException {
-        //String parentHandle = driver.getWindowHandle();
         actions.sendKeys(Keys.PAGE_DOWN).perform();
-        postPage1.sharePostOnVKBySideButton();
-        for(String winHandle : driver.getWindowHandles()){
-                driver.switchTo().window(winHandle);
-            }
+        postPage1.sharePostOnVKBySideButton(driver);
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("vk.com"));
     }
@@ -58,10 +54,7 @@ public class Posts {
     @Test
     public void sharePost1OnTwitterBySideButton() throws InterruptedException {
         actions.sendKeys(Keys.PAGE_DOWN).perform();
-        postPage1.sharePostOnTwitterBySideButton();
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
-        }
+        postPage1.sharePostOnTwitterBySideButton(driver);
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("twitter.com"));
     }
@@ -69,10 +62,7 @@ public class Posts {
     @Test
     public void sharePost1OnFBBySideButton() throws InterruptedException {
         actions.sendKeys(Keys.PAGE_DOWN).perform();
-        postPage1.sharePostOnFBBySideButton();
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
-        }
+        postPage1.sharePostOnFBBySideButton(driver);
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("facebook.com"));
     }
