@@ -1,8 +1,10 @@
 package ru.pflb.blog.uxcrowd.test.ui.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -40,7 +42,9 @@ public class PostPOM1 {
 
         backToBlogButton.click();
     }
-
+    public void scrollPageOneTime (Actions actions){
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+    }
     public void sharePostOnVKBySideButton (WebDriver driver) {
         sideVKShareButton.click();
         for(String winHandle : driver.getWindowHandles()) {
@@ -56,7 +60,6 @@ public class PostPOM1 {
     }
 
     public void sharePostOnFBBySideButton (WebDriver driver) {
-        sideFBShareButton.click();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
         }

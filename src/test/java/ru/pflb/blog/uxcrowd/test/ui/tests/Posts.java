@@ -33,19 +33,20 @@ public class Posts {
     public void setUp (){
         driver = new ChromeDriver();
         softAssert = new SoftAssert();
-        wait = new WebDriverWait(driver, 1000);
+        wait = new WebDriverWait(driver, 3);
         uxCrowdURL = "https://uxcrowd.ru/";
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         driver.get(uxCrowdBlogURL + postURL1);
         postPage1 = new PostPOM1(driver);
-        driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().pageLoadTimeout(2, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
         actions = new Actions(driver);
     }
 
     @Test
     public void sharePost1OnVKBySideButton() throws InterruptedException {
-        actions.sendKeys(Keys.PAGE_DOWN).perform();
+        postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnVKBySideButton(driver);
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("vk.com"));
@@ -53,7 +54,7 @@ public class Posts {
 
     @Test
     public void sharePost1OnTwitterBySideButton() throws InterruptedException {
-        actions.sendKeys(Keys.PAGE_DOWN).perform();
+        postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnTwitterBySideButton(driver);
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("twitter.com"));
@@ -61,9 +62,9 @@ public class Posts {
 
     @Test
     public void sharePost1OnFBBySideButton() throws InterruptedException {
-        actions.sendKeys(Keys.PAGE_DOWN).perform();
+        postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnFBBySideButton(driver);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.lfloat")));
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("facebook.com"));
     }
 
