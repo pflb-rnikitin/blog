@@ -87,11 +87,9 @@ public class Posts {
         String commentText = "Just another sample comment";
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("textarea.hcc")));
         postPage1.leaveAnAnonymousComment(commentText);
-        WebElement iframe = driver.findElement(By.id("hc_analytics_frame"));
-        driver.switchTo().frame(iframe);
-        //driver.switchTo().frame("hc_analytics_frame");
-        driver.findElement(By.cssSelector("input.hcc[el='Nick']")).sendKeys("test");
-        Thread.sleep(5000);
+        driver.findElement(By.cssSelector("input.hcc[el='Nick']")).sendKeys("AnonymousTestUser");
+        driver.findElement(By.cssSelector("input.hcc[el='Email']")).sendKeys("sample@email.com");
+        driver.findElement(By.cssSelector("div.hc__authorization__send__txt")).click();
     }
     @Test
     public void closePost1() throws InterruptedException {

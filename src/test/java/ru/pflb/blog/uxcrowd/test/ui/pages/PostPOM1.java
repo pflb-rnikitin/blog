@@ -57,6 +57,5 @@ public class PostPOM1 {
         replyBoxTextArea.click();
         replyBoxTextArea.sendKeys(commentText);
         sendCommentButton.click();
-        Thread.sleep(10000);
     }
 }
