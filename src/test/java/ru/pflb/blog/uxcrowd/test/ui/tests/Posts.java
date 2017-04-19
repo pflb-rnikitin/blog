@@ -1,13 +1,12 @@
 package ru.pflb.blog.uxcrowd.test.ui.tests;
 
+import javafx.scene.shape.MoveTo;
 import org.hamcrest.MatcherAssert;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
 
 import org.omg.PortableServer.THREAD_POLICY_ID;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -61,7 +60,6 @@ public class Posts {
 
     @Test
     public void sharePost1OnTwitterBySideButton() throws InterruptedException {
-        //String parentHandle = driver.getWindowHandle();
         actions.sendKeys(Keys.PAGE_DOWN).perform();
         postPage1.sharePostOnTwitterBySideButton();
         for(String winHandle : driver.getWindowHandles()){
@@ -73,7 +71,6 @@ public class Posts {
 
     @Test
     public void sharePost1OnFBBySideButton() throws InterruptedException {
-        //String parentHandle = driver.getWindowHandle();
         actions.sendKeys(Keys.PAGE_DOWN).perform();
         postPage1.sharePostOnFBBySideButton();
         for(String winHandle : driver.getWindowHandles()){
@@ -83,7 +80,19 @@ public class Posts {
         MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("facebook.com"));
     }
 
-
+    @Test
+    public void leaveATextComment () throws InterruptedException {
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("window.scrollBy(0,5000)", "");
+        String commentText = "Just another sample comment";
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("textarea.hcc")));
+        postPage1.leaveAnAnonymousComment(commentText);
+        WebElement fr = driver.findElement(By.id("hc_analytics_frame"));
+        driver.switchTo().frame(fr);
+        //driver.switchTo().frame("hc_analytics_frame");
+        driver.findElement(By.cssSelector("input.hcc[el='Nick'']")).sendKeys("test");
+        Thread.sleep(5000);
+    }
     @Test
     public void closePost1() throws InterruptedException {
         postPage1.closePost();
