@@ -1,11 +1,8 @@
 package ru.pflb.blog.uxcrowd.test.ui.tests;
 
-import javafx.scene.shape.MoveTo;
 import org.hamcrest.MatcherAssert;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
-
-import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
