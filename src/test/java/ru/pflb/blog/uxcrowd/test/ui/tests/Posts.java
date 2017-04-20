@@ -44,21 +44,21 @@ public class Posts {
     }
 
     @Test
-    public void sharePost1OnVKBySideButton() throws InterruptedException {
+    public void sharePost1OnVKBySideButton() {
         postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnVKBySideButton(driver, wait);
         MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("vk.com"));
     }
 
     @Test
-    public void sharePost1OnTwitterBySideButton() throws InterruptedException {
+    public void sharePost1OnTwitterBySideButton() {
         postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnTwitterBySideButton(driver, wait);
         MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("twitter.com"));
     }
 
     @Test
-    public void sharePost1OnFBBySideButton() throws InterruptedException {
+    public void sharePost1OnFBBySideButton() {
         postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnFBBySideButton(driver, wait);
         MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("facebook.com"));
