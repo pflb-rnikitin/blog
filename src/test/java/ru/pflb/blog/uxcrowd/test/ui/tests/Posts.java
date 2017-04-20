@@ -39,33 +39,29 @@ public class Posts {
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         driver.get(uxCrowdBlogURL + postURL1);
         postPage1 = new PostPOM1(driver);
-        driver.manage().timeouts().pageLoadTimeout(2, TimeUnit.SECONDS);
-        //driver.manage().timeouts().implicitlyWait(1000, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
         actions = new Actions(driver);
     }
 
     @Test
     public void sharePost1OnVKBySideButton() throws InterruptedException {
         postPage1.scrollPageOneTime(actions);
-        postPage1.sharePostOnVKBySideButton(driver);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
-        MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("vk.com"));
+        postPage1.sharePostOnVKBySideButton(driver, wait);
+        MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("vk.com"));
     }
 
     @Test
     public void sharePost1OnTwitterBySideButton() throws InterruptedException {
         postPage1.scrollPageOneTime(actions);
-        postPage1.sharePostOnTwitterBySideButton(driver);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector()));
-        MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("twitter.com"));
+        postPage1.sharePostOnTwitterBySideButton(driver, wait);
+        MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("twitter.com"));
     }
 
     @Test
     public void sharePost1OnFBBySideButton() throws InterruptedException {
         postPage1.scrollPageOneTime(actions);
-        postPage1.sharePostOnFBBySideButton(driver);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.lfloat")));
-        MatcherAssert.assertThat(driver.getCurrentUrl(),containsString("facebook.com"));
+        postPage1.sharePostOnFBBySideButton(driver, wait);
+        MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("facebook.com"));
     }
 
     @Test

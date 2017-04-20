@@ -8,6 +8,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 //Post one page object model
 
 public class PostPOM1 {
@@ -34,6 +37,7 @@ public class PostPOM1 {
     WebElement sendCommentButton;
 
 
+
     public PostPOM1(WebDriver driver) {
         PageFactory.initElements(driver,this);
     }
@@ -42,27 +46,37 @@ public class PostPOM1 {
 
         backToBlogButton.click();
     }
+
+    public String getCurrentURL (WebDriver driver) {
+        String currentURL = driver.getCurrentUrl();
+        return currentURL;
+    }
     public void scrollPageOneTime (Actions actions){
         actions.sendKeys(Keys.PAGE_DOWN).perform();
     }
-    public void sharePostOnVKBySideButton (WebDriver driver) {
+
+    public void sharePostOnVKBySideButton (WebDriver driver, WebDriverWait wait) {
         sideVKShareButton.click();
         for(String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
         }
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("input.oauth_form_input")));
     }
 
-    public void sharePostOnTwitterBySideButton (WebDriver driver) {
+    public void sharePostOnTwitterBySideButton (WebDriver driver, WebDriverWait wait) {
         sideTwitterShareButton.click();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
         }
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input#username_or_email")));
     }
 
-    public void sharePostOnFBBySideButton (WebDriver driver) {
+    public void sharePostOnFBBySideButton (WebDriver driver, WebDriverWait wait) {
+        sideFBShareButton.click();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
         }
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input#email")));
     }
 
     public void leaveAnAnonymousComment (String commentText) throws InterruptedException {
