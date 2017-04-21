@@ -81,13 +81,14 @@ public class Posts {
         postPage1.leaveAnAnonymousComment(commentText);
         postPage1.sendCommentWithoutAuth(name, email);
     }
-    
+
     @Test
-    public void closePost1() throws InterruptedException {
+    public void closePost1() {
         postPage1.closePost();
         MatcherAssert.assertThat(driver.getCurrentUrl(),is (uxCrowdBlogURL));
 
     }
+
     @AfterMethod
     public void tearDown (){
 
