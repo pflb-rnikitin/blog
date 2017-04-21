@@ -28,18 +28,20 @@ public class Posts {
     private PostPOM1 postPage1;
     private String uxCrowdBlogURL;
     private Actions actions;
+    private JavascriptExecutor jse;
 
     @BeforeMethod
     public void setUp (){
         driver = new ChromeDriver();
         actions = new Actions(driver);
+        jse = (JavascriptExecutor)driver;
         softAssert = new SoftAssert();
         wait = new WebDriverWait(driver, 3);
         uxCrowdURL = "https://uxcrowd.ru/";
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         driver.get(uxCrowdBlogURL + postURL1);
-        postPage1 = new PostPOM1(driver, actions, wait);
+        postPage1 = new PostPOM1(driver, actions, wait, jse);
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
     }
 
@@ -69,8 +71,7 @@ public class Posts {
 
     @Test
     public void leaveATextComment () throws InterruptedException {
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("window.scrollBy(0,5000)", "");
+        postPage1.scrollPageToTheCommentSection();
         String commentText = "Just another sample comment";
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("textarea.hcc")));
         postPage1.leaveAnAnonymousComment(commentText);

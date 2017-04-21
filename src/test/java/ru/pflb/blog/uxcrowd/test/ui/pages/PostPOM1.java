@@ -1,9 +1,6 @@
 package ru.pflb.blog.uxcrowd.test.ui.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -19,7 +16,8 @@ public class PostPOM1 {
 
     private WebDriver driver;
     private Actions actions;
-    WebDriverWait wait;
+    private WebDriverWait wait;
+    private JavascriptExecutor jse;
 
     @FindBy(how=How.CSS, using="div.btn_next_uxc")
     WebElement backToUXCrowdButton;
@@ -44,16 +42,21 @@ public class PostPOM1 {
 
 
 
-    public PostPOM1(WebDriver driver, Actions actions, WebDriverWait wait) {
+    public PostPOM1(WebDriver driver, Actions actions, WebDriverWait wait, JavascriptExecutor jse) {
         this.driver = driver;
         this.actions = actions;
         this.wait = wait;
+        this.jse = jse;
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
         PageFactory.initElements(driver,this);
     }
 
     public void maximizeWindow () {
         driver.manage().window().maximize();
+    }
+
+    public void scrollPageToTheCommentSection () {
+        jse.executeScript("window.scrollBy(0,5000)", "");
     }
 
     public void closePost () {
