@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 public class PostPOM1 {
 
     private WebDriver driver;
+    private Actions actions;
+    WebDriverWait wait;
 
     @FindBy(how=How.CSS, using="div.btn_next_uxc")
     WebElement backToUXCrowdButton;
@@ -42,26 +44,31 @@ public class PostPOM1 {
 
 
 
-    public PostPOM1(WebDriver driver) {
+    public PostPOM1(WebDriver driver, Actions actions, WebDriverWait wait) {
         this.driver = driver;
+        this.actions = actions;
+        this.wait = wait;
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
         PageFactory.initElements(driver,this);
     }
 
-    public void closePost () {
+    public void maximizeWindow () {
+        driver.manage().window().maximize();
+    }
 
+    public void closePost () {
         backToBlogButton.click();
     }
 
     public String getCurrentURL () {
-        String currentURL =  driver.getCurrentUrl();
-        return currentURL;
+        return driver.getCurrentUrl();
     }
-    public void scrollPageOneTime (Actions actions){
+
+    public void scrollPageOneTime (){
         actions.sendKeys(Keys.PAGE_DOWN).perform();
     }
 
-    public void sharePostOnVKBySideButton (WebDriver driver, WebDriverWait wait) {
+    public void sharePostOnVKBySideButton () {
         sideVKShareButton.click();
         for(String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
@@ -69,7 +76,7 @@ public class PostPOM1 {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("input.oauth_form_input")));
     }
 
-    public void sharePostOnTwitterBySideButton (WebDriver driver, WebDriverWait wait) {
+    public void sharePostOnTwitterBySideButton () {
         sideTwitterShareButton.click();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
@@ -77,7 +84,7 @@ public class PostPOM1 {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input#username_or_email")));
     }
 
-    public void sharePostOnFBBySideButton (WebDriver driver, WebDriverWait wait) {
+    public void sharePostOnFBBySideButton () {
         sideFBShareButton.click();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);

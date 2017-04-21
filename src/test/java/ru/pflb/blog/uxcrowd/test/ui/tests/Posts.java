@@ -32,36 +32,38 @@ public class Posts {
     @BeforeMethod
     public void setUp (){
         driver = new ChromeDriver();
+        actions = new Actions(driver);
         softAssert = new SoftAssert();
         wait = new WebDriverWait(driver, 3);
         uxCrowdURL = "https://uxcrowd.ru/";
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         driver.get(uxCrowdBlogURL + postURL1);
-        postPage1 = new PostPOM1(driver);
+        postPage1 = new PostPOM1(driver, actions, wait);
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
-        actions = new Actions(driver);
     }
 
     @Test
     public void sharePost1OnVKBySideButton() {
-        driver.manage().window().maximize();
-        postPage1.scrollPageOneTime(actions);
-        postPage1.sharePostOnVKBySideButton(driver, wait);
+        postPage1.maximizeWindow();
+        postPage1.scrollPageOneTime();
+        postPage1.sharePostOnVKBySideButton();
         MatcherAssert.assertThat(postPage1.getCurrentURL(),containsString("vk.com"));
     }
 
     @Test
     public void sharePost1OnTwitterBySideButton() {
-        postPage1.scrollPageOneTime(actions);
-        postPage1.sharePostOnTwitterBySideButton(driver, wait);
+        postPage1.maximizeWindow();
+        postPage1.scrollPageOneTime();
+        postPage1.sharePostOnTwitterBySideButton();
         MatcherAssert.assertThat(postPage1.getCurrentURL(),containsString("twitter.com"));
     }
 
     @Test
     public void sharePost1OnFBBySideButton() {
-        postPage1.scrollPageOneTime(actions);
-        postPage1.sharePostOnFBBySideButton(driver, wait);
+        postPage1.maximizeWindow();
+        postPage1.scrollPageOneTime();
+        postPage1.sharePostOnFBBySideButton();
         MatcherAssert.assertThat(postPage1.getCurrentURL(),containsString("facebook.com"));
     }
 
