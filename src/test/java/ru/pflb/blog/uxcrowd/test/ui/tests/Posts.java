@@ -29,6 +29,9 @@ public class Posts {
     private String uxCrowdBlogURL;
     private Actions actions;
     private JavascriptExecutor jse;
+    private String commentText;
+    private String name;
+    private String email;
 
     @BeforeMethod
     public void setUp (){
@@ -43,6 +46,9 @@ public class Posts {
         driver.get(uxCrowdBlogURL + postURL1);
         postPage1 = new PostPOM1(driver, actions, wait, jse);
         driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
+        commentText = "Just another sample comment";
+        name = "AnonymousTestUser";
+        email = "sample@email.com";
     }
 
     @Test
@@ -72,13 +78,10 @@ public class Posts {
     @Test
     public void leaveATextComment () throws InterruptedException {
         postPage1.scrollPageToTheCommentSection();
-        String commentText = "Just another sample comment";
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("textarea.hcc")));
         postPage1.leaveAnAnonymousComment(commentText);
-        driver.findElement(By.cssSelector("input.hcc[el='Nick']")).sendKeys("AnonymousTestUser");
-        driver.findElement(By.cssSelector("input.hcc[el='Email']")).sendKeys("sample@email.com");
-        driver.findElement(By.cssSelector("div.hc__authorization__send__txt")).click();
+        postPage1.sendCommentWithoutAuth(name, email);
     }
+    
     @Test
     public void closePost1() throws InterruptedException {
         postPage1.closePost();

@@ -40,7 +40,14 @@ public class PostPOM1 {
     @FindBy(how=How.CSS, using="div.hc__reply__buttons")
     WebElement sendCommentButton;
 
+    @FindBy(how=How.CSS, using="input.hcc[el='Nick']")
+    WebElement authFormNameField;
 
+    @FindBy(how=How.CSS, using="input.hcc[el='Email']")
+    WebElement authFormEmailField;
+
+    @FindBy(how=How.CSS, using="div.hc__authorization__send__txt")
+    WebElement authFormSendButton;
 
     public PostPOM1(WebDriver driver, Actions actions, WebDriverWait wait, JavascriptExecutor jse) {
         this.driver = driver;
@@ -96,8 +103,15 @@ public class PostPOM1 {
     }
 
     public void leaveAnAnonymousComment (String commentText) throws InterruptedException {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("textarea.hcc")));
         replyBoxTextArea.click();
         replyBoxTextArea.sendKeys(commentText);
         sendCommentButton.click();
+    }
+
+    public void sendCommentWithoutAuth (String name, String email){
+        authFormNameField.sendKeys(name);
+        authFormEmailField.sendKeys(email);
+        authFormSendButton.click();
     }
 }
