@@ -11,9 +11,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 //Post one page object model
 
 public class PostPOM1 {
+
+    private WebDriver driver;
 
     @FindBy(how=How.CSS, using="div.btn_next_uxc")
     WebElement backToUXCrowdButton;
@@ -39,6 +43,8 @@ public class PostPOM1 {
 
 
     public PostPOM1(WebDriver driver) {
+        this.driver = driver;
+        driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
         PageFactory.initElements(driver,this);
     }
 
@@ -47,8 +53,8 @@ public class PostPOM1 {
         backToBlogButton.click();
     }
 
-    public String getCurrentURL (WebDriver driver) {
-        String currentURL = driver.getCurrentUrl();
+    public String getCurrentURL () {
+        String currentURL =  driver.getCurrentUrl();
         return currentURL;
     }
     public void scrollPageOneTime (Actions actions){

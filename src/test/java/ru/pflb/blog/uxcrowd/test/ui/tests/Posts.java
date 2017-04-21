@@ -39,29 +39,30 @@ public class Posts {
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         driver.get(uxCrowdBlogURL + postURL1);
         postPage1 = new PostPOM1(driver);
-        driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
         actions = new Actions(driver);
     }
 
     @Test
     public void sharePost1OnVKBySideButton() {
+        driver.manage().window().maximize();
         postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnVKBySideButton(driver, wait);
-        MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("vk.com"));
+        MatcherAssert.assertThat(postPage1.getCurrentURL(),containsString("vk.com"));
     }
 
     @Test
     public void sharePost1OnTwitterBySideButton() {
         postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnTwitterBySideButton(driver, wait);
-        MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("twitter.com"));
+        MatcherAssert.assertThat(postPage1.getCurrentURL(),containsString("twitter.com"));
     }
 
     @Test
     public void sharePost1OnFBBySideButton() {
         postPage1.scrollPageOneTime(actions);
         postPage1.sharePostOnFBBySideButton(driver, wait);
-        MatcherAssert.assertThat(postPage1.getCurrentURL(driver),containsString("facebook.com"));
+        MatcherAssert.assertThat(postPage1.getCurrentURL(),containsString("facebook.com"));
     }
 
     @Test
