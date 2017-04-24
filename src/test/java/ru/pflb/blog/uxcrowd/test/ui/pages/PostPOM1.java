@@ -19,6 +19,9 @@ public class PostPOM1 {
     private WebDriverWait wait;
     private JavascriptExecutor jse;
 
+    @FindBy(how=How.CSS, using="div.header_main_block")
+    WebElement postHeader;
+
     @FindBy(how=How.CSS, using="div.btn_next_uxc")
     WebElement backToUXCrowdButton;
 
@@ -54,7 +57,7 @@ public class PostPOM1 {
         this.actions = actions;
         this.wait = wait;
         this.jse = jse;
-        driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
         PageFactory.initElements(driver,this);
     }
 
@@ -74,11 +77,19 @@ public class PostPOM1 {
         return driver.getCurrentUrl();
     }
 
-    public void scrollPageOneTime (){
+    public String getHeader() {
+        return postHeader.getText();
+    }
+
+    public void waitUntilHeaderIsPresent () {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+    }
+
+    public void scrollPageOneTime(){
         actions.sendKeys(Keys.PAGE_DOWN).perform();
     }
 
-    public void sharePostOnVKBySideButton () {
+    public void sharePostOnVKBySideButton() {
         sideVKShareButton.click();
         for(String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
@@ -86,7 +97,7 @@ public class PostPOM1 {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("input.oauth_form_input")));
     }
 
-    public void sharePostOnTwitterBySideButton () {
+    public void sharePostOnTwitterBySideButton() {
         sideTwitterShareButton.click();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
@@ -94,7 +105,7 @@ public class PostPOM1 {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input#username_or_email")));
     }
 
-    public void sharePostOnFBBySideButton () {
+    public void sharePostOnFBBySideButton() {
         sideFBShareButton.click();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
@@ -102,14 +113,14 @@ public class PostPOM1 {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input#email")));
     }
 
-    public void leaveAnAnonymousComment (String commentText) throws InterruptedException {
+    public void leaveAnAnonymousComment(String commentText) {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("textarea.hcc")));
         replyBoxTextArea.click();
         replyBoxTextArea.sendKeys(commentText);
         sendCommentButton.click();
     }
 
-    public void sendCommentWithoutAuth (String name, String email){
+    public void sendCommentWithoutAuth(String name, String email){
         authFormNameField.sendKeys(name);
         authFormEmailField.sendKeys(email);
         authFormSendButton.click();

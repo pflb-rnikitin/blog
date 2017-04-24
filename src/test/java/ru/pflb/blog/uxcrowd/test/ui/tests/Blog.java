@@ -1,196 +1,139 @@
 package ru.pflb.blog.uxcrowd.test.ui.tests;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.hamcrest.MatcherAssert;
 import static org.hamcrest.core.Is.is;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.HttpResponse;
 import ru.pflb.blog.uxcrowd.test.ui.pages.MainPOM;
+import ru.pflb.blog.uxcrowd.test.ui.pages.PostPOM1;
+import ru.pflb.blog.uxcrowd.test.ui.pages.UXCrowdPOM;
+
 import java.util.concurrent.TimeUnit;
 
 
 public class Blog {
 
-    private HttpResponse<String> response;
     private WebDriver driver;
     private SoftAssert softAssert;
     private String uxCrowdURL;
     private String uxCrowdBlogURL;
     private WebDriverWait wait;
-    private MainPOM mainPage;
-    private String postURL1;
-    private String postURL2;
-    private String postURL3;
-    private String postURL4;
-    private String postURL5;
-    private String postURL6;
-    private String postURL7;
-    private String postURL8;
-    private String postURL9;
-    private String postURL10;
+    private Actions actions;
+    private JavascriptExecutor jse;
+    private MainPOM blog;
+    private PostPOM1 post1;
+    private UXCrowdPOM uxCrowd;
 
     @BeforeMethod
     public void setUp (){
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, 10);
+        actions = new Actions(driver);
+        jse = (JavascriptExecutor)driver;
         softAssert = new SoftAssert();
-        wait = new WebDriverWait(driver, 500);
         uxCrowdURL = "https://uxcrowd.ru/";
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
-        postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
-        postURL2 = "/read/20170222T181316286preimushchestvanizkobiudzhetnykhiuzab";
-        postURL3 = "/read/20170222T1740407413sposobaupravliatvnimaniemposetitelei";
-        postURL4 = "/read/20170328T16281885510tipichnykhoshibokkommercheskikhsait";
-        postURL5 = "/read/20170328T1619303055polzovateleidliaiuzabilititestirovan";
-        postURL6 = "/read/20170328T154409856popupsoobshcheniiaeffektivnodliabizne";
-        postURL7 = "/read/20170328T153935476optimizatsiiainternetmagazinapochemup";
-        postURL8 = "/read/20170328T153256397marketologaeshchenetestirueshvottriso";
-        postURL9 = "/read/20170328T153220919sliubimyminerasstavaiteskaknepoteriat";
-        postURL10 = "/read/20170328T152751081keispoiuzabilitikakpopastvtretiakovsk";
-
         driver.get(uxCrowdBlogURL);
-        mainPage = new MainPOM(driver);
-        driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+        uxCrowd = new UXCrowdPOM(driver, wait);
+        blog = new MainPOM (driver, wait);
+        post1 = new PostPOM1(driver, actions, wait, jse);
+        driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
     }
 
     @Test
-    public void openBlog() throws Exception {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.footer-link[href='/blog']")));
-        driver.findElement(By.cssSelector("a.footer-link[href='/blog']")).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.blog_logo")));
-        String blogURL = driver.getCurrentUrl();
-        String blogTitle = driver.getTitle();
-        softAssert.assertEquals(blogURL, uxCrowdBlogURL);
-        softAssert.assertEquals(blogTitle, "Блог о пользовательском юзабилити-тестировании");
+    public void verifyNavigatingToBlogFromUXCrowd() {
+        blog.navigateToUXCrowd();
+        uxCrowd.goToBlog();
+        MatcherAssert.assertThat(blog.getBlogTitle(), is("Блог о пользовательском юзабилити-тестировании"));
+    }
+
+    @Test
+    public void verifyBlogTitle() {
+        MatcherAssert.assertThat(blog.getBlogTitle(), is("Блог о пользовательском юзабилити-тестировании"));
+    }
+
+    @Test
+    public void verifyPostHeader1() {
+        blog.openPost1();
+        post1.waitUntilHeaderIsPresent();
+        MatcherAssert.assertThat(post1.getHeader(), is("4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ"));
+    }
+
+    @Test
+    public void verifyReturnToUXCrowd () {
+        blog.navigateToUXCrowd();
+        uxCrowd.waitUntilLoginButtonIsPresent();
+        softAssert.assertEquals(uxCrowd.getCurrentURL(), uxCrowdURL);
+        softAssert.assertEquals(uxCrowd.getTitle(),"Юзабилити-тестирование — первая в России краудосрсинговая площадка.");
         softAssert.assertAll();
     }
 
-
-    @Test
-    public void getBlogStatus () throws UnirestException {
-
-        response = Unirest.get(uxCrowdURL).asString();
-        MatcherAssert.assertThat(response.getStatus(), is(200));
-    }
-    @Test
-    public void openPost1() {
-
-        mainPage.openPost1();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL1);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ");
-        softAssert.assertAll();
-    }
-
+    /*
     @Test
     public void openPost2() {
-
-        mainPage.openPost2();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL2);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "ПРЕИМУЩЕСТВА НИЗКОБЮДЖЕТНЫХ ЮЗАБИЛИТИ-ТЕСТИРОВНИЙ");
-        softAssert.assertAll();
+        blogPage.openPost2();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("ПРЕИМУЩЕСТВА НИЗКОБЮДЖЕТНЫХ ЮЗАБИЛИТИ-ТЕСТИРОВНИЙ"));
     }
 
     @Test
     public void openPost3() {
-
-        mainPage.openPost3();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL3);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "3 СПОСОБА УПРАВЛЯТЬ ВНИМАНИЕМ ПОСЕТИТЕЛЕЙ С ПОМОЩЬЮ ТОЧЕК ФИКСАЦИИ");
-        softAssert.assertAll();
+        blogPage.openPost3();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("3 СПОСОБА УПРАВЛЯТЬ ВНИМАНИЕМ ПОСЕТИТЕЛЕЙ С ПОМОЩЬЮ ТОЧЕК ФИКСАЦИИ"));
     }
 
     @Test
     public void openPost4() {
-
-        mainPage.openPost4();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL4);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "10 ТИПИЧНЫХ ОШИБОК КОММЕРЧЕСКИХ САЙТОВ С ТОЧКИ ЗРЕНИЯ ЮЗАБИЛИТИ");
-        softAssert.assertAll();
+        blogPage.openPost4();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("10 ТИПИЧНЫХ ОШИБОК КОММЕРЧЕСКИХ САЙТОВ С ТОЧКИ ЗРЕНИЯ ЮЗАБИЛИТИ"));
     }
 
     @Test
     public void openPost5() {
-
-        mainPage.openPost5();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL5);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "5 ПОЛЬЗОВАТЕЛЕЙ ДЛЯ ЮЗАБИЛИТИ-ТЕСТИРОВАНИЯ: МНОГО ЭТО ИЛИ МАЛО");
-        softAssert.assertAll();
+        blogPage.openPost5();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("5 ПОЛЬЗОВАТЕЛЕЙ ДЛЯ ЮЗАБИЛИТИ-ТЕСТИРОВАНИЯ: МНОГО ЭТО ИЛИ МАЛО"));
     }
 
     @Test
     public void openPost6() {
-
-        mainPage.openPost6();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL6);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "POP-UP СООБЩЕНИЯ: ЭФФЕКТИВНО ДЛЯ БИЗНЕСА И НЕНАВЯЗЧИВО ДЛЯ ПОЛЬЗОВАТЕЛЕЙ");
-        softAssert.assertAll();
+        blogPage.openPost6();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("POP-UP СООБЩЕНИЯ: ЭФФЕКТИВНО ДЛЯ БИЗНЕСА И НЕНАВЯЗЧИВО ДЛЯ ПОЛЬЗОВАТЕЛЕЙ"));
     }
 
     @Test
     public void openPost7() {
-
-        mainPage.openPost7();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL7);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "ОПТИМИЗАЦИЯ ИНТЕРНЕТ-МАГАЗИНА: ПОЧЕМУ ПОКУПАТЕЛИ БРОСАЮТ СВОИ КОРЗИНЫ");
-        softAssert.assertAll();
+        blogPage.openPost7();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("ОПТИМИЗАЦИЯ ИНТЕРНЕТ-МАГАЗИНА: ПОЧЕМУ ПОКУПАТЕЛИ БРОСАЮТ СВОИ КОРЗИНЫ"));
     }
 
     @Test
     public void openPost8() {
-
-        mainPage.openPost8();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL8);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "МАРКЕТОЛОГ, А ЕЩЕ НЕ ТЕСТИРУЕШЬ? ВОТ ТРИ СОВЕТА, КАК НАЧАТЬ");
-        softAssert.assertAll();
+        blogPage.openPost8();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("МАРКЕТОЛОГ, А ЕЩЕ НЕ ТЕСТИРУЕШЬ? ВОТ ТРИ СОВЕТА, КАК НАЧАТЬ"));
     }
 
     @Test
     public void openPost9() {
-
-        mainPage.openPost9();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL9);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "С ЛЮБИМЫМИ НЕ РАССТАВАЙТЕСЬ: КАК НЕ ПОТЕРЯТЬ КЛИЕНТОВ В «ГОРЯЧИЙ» СЕЗОН");
-        softAssert.assertAll();
+        blogPage.openPost9();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("С ЛЮБИМЫМИ НЕ РАССТАВАЙТЕСЬ: КАК НЕ ПОТЕРЯТЬ КЛИЕНТОВ В «ГОРЯЧИЙ» СЕЗОН"));
     }
 
     @Test
     public void openPost10() {
-
-        mainPage.openPost10();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
-        softAssert.assertEquals(driver.getCurrentUrl(),uxCrowdBlogURL + postURL10);
-        softAssert.assertEquals(driver.findElement(By.cssSelector("div.header_main_block")).getText(), "КЕЙС ПО ЮЗАБИЛИТИ: КАК ПОПАСТЬ В ТРЕТЬЯКОВСКУЮ ГАЛЕРЕЮ?");
-        softAssert.assertAll();
+        blogPage.openPost10();
+        MatcherAssert.assertThat(driver.findElement(By.cssSelector("div.header_main_block")).getText(), is("КЕЙС ПО ЮЗАБИЛИТИ: КАК ПОПАСТЬ В ТРЕТЬЯКОВСКУЮ ГАЛЕРЕЮ?"));
     }
 
-
-    @Test
-    public void closeBlog () throws Exception {
-        driver.navigate().to(uxCrowdBlogURL);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.btn_next_uxc")));
-        mainPage.closeBlog();
-        Thread.sleep(590);
-        softAssert.assertEquals(driver.getCurrentUrl(), uxCrowdURL);
-        softAssert.assertEquals(driver.getTitle(),"Юзабилити-тестирование — первая в России краудосрсинговая площадка.");
-        softAssert.assertAll();
-    }
+*/
 
     @AfterMethod
     public void tearDown (){
