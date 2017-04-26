@@ -102,7 +102,7 @@ public class Posts {
         blog.openPost1();
         post1.waitUntilHeaderIsPresent();
         post1.scrollPageToTheCommentSection();
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("span.node_comment_count"))));
+        post1.waitUntilCounterIsPresent();
         MatcherAssert.assertThat(post1.getCounterValue(), is(post1.countTheNumberOfComments()));
     }
 

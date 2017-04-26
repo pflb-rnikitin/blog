@@ -152,4 +152,8 @@ public class PostPOM1 {
     public String countTheNumberOfComments() {
         return String.valueOf(driver.findElement(By.cssSelector("div.hc__messages")).findElements(By.cssSelector("div[id^='hcm']")).size());
     }
+
+    public void waitUntilCounterIsPresent() {
+        wait.until(ExpectedConditions.elementToBeClickable(commentCounter));
+    }
 }
