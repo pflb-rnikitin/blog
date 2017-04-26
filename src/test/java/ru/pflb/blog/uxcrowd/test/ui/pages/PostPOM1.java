@@ -52,6 +52,16 @@ public class PostPOM1 {
     @FindBy(how=How.CSS, using="div.hc__authorization__send__txt")
     WebElement authFormSendButton;
 
+    @FindBy(how=How.CSS, using="div.hc__messages > div [el='Text']")
+    WebElement lastComment;
+
+    @FindBy(how=How.CSS, using="div.hc__authorization__box")
+    WebElement authBox;
+
+    @FindBy(how=How.CSS, using="span.node_comment_count")
+    WebElement commentCounter;
+
+
     public PostPOM1(WebDriver driver, Actions actions, WebDriverWait wait, JavascriptExecutor jse) {
         this.driver = driver;
         this.actions = actions;
@@ -82,7 +92,7 @@ public class PostPOM1 {
     }
 
     public void waitUntilHeaderIsPresent () {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.header_main_block")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div > h1")));
     }
 
     public void scrollPageOneTime(){
@@ -124,5 +134,22 @@ public class PostPOM1 {
         authFormNameField.sendKeys(name);
         authFormEmailField.sendKeys(email);
         authFormSendButton.click();
+    }
+
+    public String getLastCommentText() {
+        return lastComment.getText();
+
+    }
+
+    public void waitUntilAuthBoxIsClosed() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.hc__authorization__box")));
+    }
+
+    public String getCounterValue() {
+        return commentCounter.getText();
+    }
+
+    public String countTheNumberOfComments() {
+        return String.valueOf(driver.findElement(By.cssSelector("div.hc__messages")).findElements(By.cssSelector("div[id^='hcm']")).size());
     }
 }

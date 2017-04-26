@@ -63,13 +63,6 @@ public class Blog {
     }
 
     @Test
-    public void verifyPostHeader1() {
-        blog.openPost1();
-        post1.waitUntilHeaderIsPresent();
-        MatcherAssert.assertThat(post1.getHeader(), is("4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ"));
-    }
-
-    @Test
     public void verifyReturnToUXCrowd () {
         blog.navigateToUXCrowd();
         uxCrowd.waitUntilLoginButtonIsPresent();

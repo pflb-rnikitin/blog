@@ -24,7 +24,7 @@ public class Posts {
     private String uxCrowdURL;
     private String postURL1;
     private WebDriverWait wait;
-    private MainPOM blogPage;
+    private MainPOM blog;
     private PostPOM1 post1;
     private String uxCrowdBlogURL;
     private Actions actions;
@@ -44,17 +44,24 @@ public class Posts {
         uxCrowdBlogURL = "https://uxcrowd.ru/blog";
         postURL1 = "/read/20170222T1834556644prichinypochemuliudinepolzuiutsiavas";
         driver.get(uxCrowdBlogURL);
-        blogPage = new MainPOM(driver, wait);
+        blog = new MainPOM(driver, wait);
         post1 = new PostPOM1(driver, actions, wait, jse);
         driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
-        commentText = "Just another sample comment";
+        commentText = "Just another sample comment78";
         name = "AnonymousTestUser";
         email = "sample@email.com";
     }
 
     @Test
+    public void verifyPostHeader1() {
+        blog.openPost1();
+        post1.waitUntilHeaderIsPresent();
+        MatcherAssert.assertThat(post1.getHeader(), is("4 ПРИЧИНЫ, ПОЧЕМУ ЛЮДИ НЕ ПОЛЬЗУЮТСЯ ВАШИМ МОБИЛЬНЫМ ПРИЛОЖЕНИЕМ"));
+    }
+
+    @Test
     public void verifyPost1SharingOnVKBySideButton() {
-        blogPage.openPost1();
+        blog.openPost1();
         post1.maximizeWindow();
         post1.scrollPageOneTime();
         post1.sharePostOnVKBySideButton();
@@ -63,7 +70,7 @@ public class Posts {
 
     @Test
     public void verifyPost1SharingOnTwitterBySideButton() {
-        blogPage.openPost1();
+        blog.openPost1();
         post1.maximizeWindow();
         post1.scrollPageOneTime();
         post1.sharePostOnTwitterBySideButton();
@@ -72,7 +79,7 @@ public class Posts {
 
     @Test
     public void verifyPost1SharingOnFBBySideButton() {
-        blogPage.openPost1();
+        blog.openPost1();
         post1.maximizeWindow();
         post1.scrollPageOneTime();
         post1.sharePostOnFBBySideButton();
@@ -80,17 +87,28 @@ public class Posts {
     }
 
     @Test
-    public void verifyATextCommentLeaving() throws InterruptedException {
-        blogPage.openPost1();
+    public void verifyATextCommentLeaving() {
+        blog.openPost1();
         post1.waitUntilHeaderIsPresent();
         post1.scrollPageToTheCommentSection();
         post1.leaveAnAnonymousComment(commentText);
         post1.sendCommentWithoutAuth(name, email);
+        post1.waitUntilAuthBoxIsClosed();
+        MatcherAssert.assertThat(post1.getLastCommentText(), is(commentText));
+    }
+
+    @Test
+    public void verifyCommentsCounter() throws InterruptedException {
+        blog.openPost1();
+        post1.waitUntilHeaderIsPresent();
+        post1.scrollPageToTheCommentSection();
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("span.node_comment_count"))));
+        MatcherAssert.assertThat(post1.getCounterValue(), is(post1.countTheNumberOfComments()));
     }
 
     @Test
     public void verifyReturnToBlogFromPost1() {
-        blogPage.openPost1();
+        blog.openPost1();
         post1.closePost();
         MatcherAssert.assertThat(driver.getCurrentUrl(),is (uxCrowdBlogURL));
     }
